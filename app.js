@@ -25,7 +25,7 @@ app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(routes);
+app.use('/', routes);
 app.use('/', (req, res, next) => {
   next(new PageNotFound('Запрашиваеммый ресурс не найден'));
 });
