@@ -20,7 +20,9 @@ module.exports.patchUser = (req, res, next) => {
     .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        next(new NotUniqueError('Данный email уже зарегестрирован'));
+      } else if (err.name === 'ValidationError') {
         next(new NotValidError('Переданы некорректные данные'));
       } else {
         next(err);
@@ -37,7 +39,11 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, email, password: hash,
     }))
-    .then((user) => res.send(user))
+    .then((user) => {
+      const newUser = user.toObject();
+      delete newUser.password;
+      res.send(user);
+    })
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
         next(new NotUniqueError('Данный email уже зарегестрирован'));

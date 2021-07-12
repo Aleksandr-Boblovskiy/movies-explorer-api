@@ -11,10 +11,10 @@ module.exports.getMovies = (req, res, next) => {
 
 module.exports.saveMovie = (req, res, next) => {
   const owner = req.user._id;
-  const movieId = '1f525cf06e02630312f3fed9';
+
   const {
     country, director, duration, year, description, image,
-    trailer, thumbnail, nameRU, nameEN,
+    trailer, thumbnail, movieId, nameRU, nameEN,
   } = req.body;
 
   Movie.create({
@@ -46,8 +46,8 @@ module.exports.deleteMovie = (req, res, next) => {
     .orFail(new NotFoundError('Карточка не найдена'))
     .then((movie) => {
       if (movie.owner.toString() === req.user._id) {
-        Movie.findByIdAndRemove(req.params.movieId)
-          .then((delcard) => res.send(delcard))
+        movie.remove()
+          .then(() => res.send({ message: movie }))
           .catch(next);
       } else {
         next(new NotEnoughRightsError('Нет прав на удаление карточки'));
