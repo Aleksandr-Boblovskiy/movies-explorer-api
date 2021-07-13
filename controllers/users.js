@@ -42,7 +42,7 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => {
       const newUser = user.toObject();
       delete newUser.password;
-      res.send(user);
+      res.send(newUser);
     })
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
