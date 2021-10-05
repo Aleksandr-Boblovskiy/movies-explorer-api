@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const { PORT, MONGO_URL } = require('./config');
 const routes = require('./routes');
@@ -19,6 +20,7 @@ mongoose.connect(MONGO_URL, {
 });
 
 app.use(requestLogger);
+app.use(cors());
 app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
