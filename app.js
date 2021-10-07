@@ -25,7 +25,7 @@ const allowedCors = [
   'http://praktikum.tk',
   'http://kinopoisk.nomoredomains.rocks',
   'https://kinopoisk.nomoredomains.rocks',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 app.use(requestLogger);
