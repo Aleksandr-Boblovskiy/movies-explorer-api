@@ -19,8 +19,6 @@ mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
-app.use(cors());
-
 // const allowedCors = [
 //   'https://praktikum.tk',
 //   'http://praktikum.tk',
@@ -44,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //   next();
 // });
+app.use(cors());
 
 app.use(routes);
 
