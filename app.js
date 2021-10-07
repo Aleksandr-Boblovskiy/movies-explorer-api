@@ -11,8 +11,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 
 const app = express();
-app.use(cors());
-app.options('*', cors());
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -34,6 +32,13 @@ app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}));
 
 // app.use((req, res, next) => {
 //   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
