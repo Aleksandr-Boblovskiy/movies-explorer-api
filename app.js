@@ -19,12 +19,7 @@ mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
-app.use(cors({
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: true,
-  optionsSuccessStatus: 204,
-}));
+app.use(cors());
 
 // const allowedCors = [
 //   'https://praktikum.tk',
