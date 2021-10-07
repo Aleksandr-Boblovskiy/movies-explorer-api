@@ -11,6 +11,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -20,7 +21,6 @@ mongoose.connect(MONGO_URL, {
 });
 
 app.use(requestLogger);
-app.use(cors());
 app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
